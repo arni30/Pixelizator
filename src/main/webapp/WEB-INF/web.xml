@@ -8,18 +8,10 @@
         <servlet-name>Pixelizator</servlet-name>
         <servlet-class>world.ucode.Servlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>Pixelizator2</servlet-name>
-        <servlet-class>world.ucode.Servlet2</servlet-class>
-    </servlet>
 
     <servlet-mapping>
         <servlet-name>Pixelizator</servlet-name>
         <url-pattern>/Pixelizator</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Pixelizator2</servlet-name>
-        <url-pattern>/Pixelizator2</url-pattern>
     </servlet-mapping>
 
 </web-app>
