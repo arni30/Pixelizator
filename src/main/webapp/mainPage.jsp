@@ -38,7 +38,11 @@
         <h1>Pixelizator</h1>
         <div class="row">
             <!-- with input that accepts one file -->
-                <input id="file" type="file" accept="image/*" onchange=updateSize()>
+            <form method="post" enctype="multipart/form-data">
+                <input name="submit" id="file" type="file" accept="image/*" onchange=updateSize()>
+                <br>
+                <button type="submit">send</button>
+            </form>
                 <p>
                 total size: <span id="fileSize">0</span>
                 </p>
@@ -79,15 +83,13 @@
                 }
 
                 document.getElementById('file').addEventListener('change', showImage, false);
-                document.getElementById('file').addEventListener('load', reset, false);
+                // document.getElementById('file').addEventListener('load', reset, false);
 
             </script>
-
             <p>
-                <input type="email" name="email" required multiple>
+                <h2>${requestScope.path}</h2>
+                <img src="${requestScope.path}">
             </p>
-
-
         </div>
     </body>
 </html>
