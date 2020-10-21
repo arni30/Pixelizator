@@ -87,8 +87,8 @@
 
             </script>
             <p>
-                <h2>${requestScope.path}</h2>
-                <img src="${requestScope.path}">
+                <h2>"${requestScope.path}"</h2>
+                <img src=${requestScope.path}>
             </p>
         </div>
     </body>

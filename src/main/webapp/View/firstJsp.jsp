@@ -1,4 +1,4 @@
-<%@ page import="java.util.Date, world.ucode.logic.test" %>
+<%@ page import="java.util.Date, world.ucode.Model.BlackAndWhite" %>
 <%--
   Created by IntelliJ IDEA.
   User: oarnopolin
@@ -16,7 +16,7 @@
     Hallo
     <p>
         <%= new Date()%>
-        <% test tc = new test(); %>
+        <% BlackAndWhite tc = new BlackAndWhite(); %>
         <%= tc.getInfo() %>
         <br>
         <br>

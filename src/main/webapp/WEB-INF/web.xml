@@ -6,12 +6,12 @@
 
     <servlet>
         <servlet-name>Pixelizator</servlet-name>
-        <servlet-class>world.ucode.Servlet</servlet-class>
+        <servlet-class>world.ucode.Controller.Servlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>Pixelizator</servlet-name>
-        <url-pattern>/Pixelizator</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>PixelizatorJsp</servlet-name>
@@ -22,5 +22,4 @@
         <servlet-name>PixelizatorJsp</servlet-name>
         <url-pattern>/Pixelizator-jsp</url-pattern>
     </servlet-mapping>
-
 </web-app>
