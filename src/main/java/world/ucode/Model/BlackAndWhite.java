@@ -20,4 +20,8 @@ public class BlackAndWhite extends ChangingImageAbstract {
         graphics.drawImage(super.getOriginalImage(), 0, 0, null);
         saveNewImage(blackAndWhiteImg, "bw_");
     }
+    @Override
+    public String getNewFileName() {
+        return "bw_" + getFileName();
+    }
 }

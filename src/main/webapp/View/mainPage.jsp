@@ -87,8 +87,8 @@
 
             </script>
             <p>
-                <h2>"${requestScope.path}"</h2>
-                <img src=${requestScope.path}>
+                <h2>${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%></h2>
+                <img src="${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>">
             </p>
         </div>
     </body>

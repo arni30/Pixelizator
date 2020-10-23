@@ -26,7 +26,8 @@ public class Servlet extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
         ChangingImageAbstract changingImage = (ChangingImageAbstract) router.makeActionObject("pixelate", request);
         changingImage.makeAction();
-        request.setAttribute("path", changingImage.getNewImagePath());
+        response.setContentType("image/*");
+        request.setAttribute("imgName", changingImage.getNewFileName());
         getServletContext().getRequestDispatcher("/View/mainPage.jsp").forward(
                 request, response);
     }

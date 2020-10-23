@@ -18,6 +18,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apidesign.bck2brwsr</groupId>
+            <artifactId>emul.mini</artifactId>
+            <version>0.16</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>8.0.1</version>
@@ -54,7 +61,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <port>8087</port>
+                    <port>8080</port>
                     <path>/</path>
                 </configuration>
             </plugin>

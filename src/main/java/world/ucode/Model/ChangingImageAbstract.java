@@ -3,6 +3,7 @@ package world.ucode.Model;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,6 +15,7 @@ public abstract class ChangingImageAbstract {
     private String fileName;
     private BufferedImage originalImage;
     private String newImagePath;
+    private String newFileName;
 
     public ChangingImageAbstract(HttpServletRequest request) throws IOException, ServletException {
         String appPath = request.getServletContext().getRealPath("");
@@ -68,6 +70,8 @@ public abstract class ChangingImageAbstract {
     public void saveNewImage(BufferedImage newImg, String prefix) throws IOException {
         newImagePath = imageSavePath + File.separator + prefix + fileName;
         ImageIO.write(newImg, "jpg", new File(newImagePath));
-
+    }
+    public String getNewFileName() {
+        return null;
     }
 }
