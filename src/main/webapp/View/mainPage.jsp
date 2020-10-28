@@ -41,54 +41,49 @@
             <form method="post" enctype="multipart/form-data">
                 <input name="submit" id="file" type="file" accept="image/*" onchange=updateSize()>
                 <br>
-                <button type="submit">send</button>
+                pixels:
+                <input type="range" name="pixels" min="0" max="100" step="1" value="50" onchange="updateTextInput(this.value);">
+                <input type="text" id="textInput" content="pixels:" value="50">
+                <br>
+                <button type="submit"onclick="jQuery('#newImg').load(' #newImg');">send</button>
             </form>
                 <p>
                 total size: <span id="fileSize">0</span>
                 </p>
-            <div class="row"><span id="output"></span></div>
+            <div class="row"><img id="output"></div>
             <br><br>
             <script>
-                function showImage(evt) {
-                    var file = evt.target.files; // FileList object
-
-                    var f = file[0]
-
-                    // Only process image files.
-                    if (!f.type.match('image.*')) {
-                        alert("Только изображения....");
-                    }
-
-                    var reader = new FileReader();
-
-                    // Closure to capture the file information.
-                    reader.onload = (function(theFile) {
-                        return function(e) {
-                            // Render thumbnail.
-                            var span = document.createElement('span');
-                            span.innerHTML = ['<img class="img-thumbnail" src="', e.target.result,
-                                '" title="', escape(theFile.name), '"/>'].join('');
-                            document.getElementById('output').innerHTML = "";
-                            document.getElementById('output').insertBefore(span, null);
-                        };
-                    })(f);
-
-                    // Read in the image file as a data URL.
-                    reader.readAsDataURL(f);
+                function updateTextInput(val) {
+                    document.getElementById('textInput').value=val;
                 }
+                document.getElementById("file").addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        var image = document.getElementById("output");  // $('img')[0]
+                        image.src = URL.createObjectURL(this.files[0]); // set src to blob url
+
+                        var img= this.files[0].size;
+                        var imgsize=img/1024;
+                        document.getElementById("fileSize").innerHTML = imgsize.toFixed(3) + " MiB";
+                        image.onload = imageIsLoaded;
+                    }
+                });
                 function reset(evt) {
                     var file = evt.target.files; // FileList object
                     var f = file[0];
                     f = "";
                 }
+                var button = document.getElementById('btn-download');
+                button.addEventListener('click', function (e) {
+                    var dataURL = canvas.toDataURL('image/png');
+                    button.href = dataURL;
+                });
 
-                document.getElementById('file').addEventListener('change', showImage, false);
+                // document.getElementById('file').addEventListener('change', showImage, false);
                 // document.getElementById('file').addEventListener('load', reset, false);
 
             </script>
             <p>
-                <h2>${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%></h2>
-                <img src="${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>">
+                <img id="newImg" src="${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>">
             </p>
         </div>
     </body>

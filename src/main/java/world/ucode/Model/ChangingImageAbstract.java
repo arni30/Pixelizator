@@ -16,8 +16,12 @@ public abstract class ChangingImageAbstract {
     private BufferedImage originalImage;
     private String newImagePath;
     private String newFileName;
+    private HttpServletResponse response;
+    private HttpServletRequest request;
 
-    public ChangingImageAbstract(HttpServletRequest request) throws IOException, ServletException {
+    public ChangingImageAbstract(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        this.response = response;
+        this.request = request;
         String appPath = request.getServletContext().getRealPath("");
         imageSavePath = appPath + File.separator + SAVE_DIR;
         fileName = makeFileName(request);
@@ -48,10 +52,12 @@ public abstract class ChangingImageAbstract {
     private String makeFileName(HttpServletRequest request) throws IOException, ServletException {
         checkDirExisting();
         for (Part part : request.getParts()) {
-            fileName = extractFileName(part);
-            // refines the fileName in case it is an absolute path
-            fileName = new File(fileName).getName();
-            part.write(imageSavePath + File.separator + fileName);
+            if (extractFileName(part).length() != 0) {
+                fileName = extractFileName(part);
+                // refines the fileName in case it is an absolute path
+                fileName = new File(fileName).getName();
+                part.write(imageSavePath + File.separator + fileName);
+            }
         }
         return fileName;
     }

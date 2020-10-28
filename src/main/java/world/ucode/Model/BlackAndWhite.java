@@ -2,13 +2,14 @@ package world.ucode.Model;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class BlackAndWhite extends ChangingImageAbstract {
-    public BlackAndWhite(HttpServletRequest request) throws IOException, ServletException {
-        super(request);
+    public BlackAndWhite(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        super(request, response);
     }
     @Override
     public void makeAction() throws IOException {

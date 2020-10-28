@@ -24,11 +24,11 @@ public class Servlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        ChangingImageAbstract changingImage = (ChangingImageAbstract) router.makeActionObject("pixelate", request);
+        ChangingImageAbstract changingImage = (ChangingImageAbstract) router.makeActionObject("pixelate", request, response);
         changingImage.makeAction();
+        System.out.println(request.getParameter("pixels"));
         response.setContentType("image/*");
         request.setAttribute("imgName", changingImage.getNewFileName());
-        getServletContext().getRequestDispatcher("/View/mainPage.jsp").forward(
-                request, response);
+        request.getRequestDispatcher("/View/mainPage.jsp").forward(request, response);
     }
 }
