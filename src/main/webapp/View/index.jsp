@@ -32,7 +32,7 @@
                 document.getElementById("fileSize").innerHTML = sOutput;
             }
         </script>
-        <link rel="stylesheet" href="style.css"/>
+        <link rel="stylesheet" href="../style.css"/>
     </head>
 
     <body bgcolor="#7fffd4">
