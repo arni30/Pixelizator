@@ -19,7 +19,6 @@ public class Servlet extends HttpServlet {
     private final Router router = new Router();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/View/mainPage.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request,
@@ -29,6 +28,6 @@ public class Servlet extends HttpServlet {
         System.out.println(request.getParameter("pixels"));
         response.setContentType("image/*");
         request.setAttribute("imgName", changingImage.getNewFileName());
-        request.getRequestDispatcher("/View/mainPage.jsp").forward(request, response);
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }

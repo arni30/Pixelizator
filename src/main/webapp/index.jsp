@@ -32,18 +32,19 @@
                 document.getElementById("fileSize").innerHTML = sOutput;
             }
         </script>
+        <link rel="stylesheet" href="style.css"/>
     </head>
 
     <body bgcolor="#7fffd4">
         <h1>Pixelizator</h1>
         <div class="row">
             <!-- with input that accepts one file -->
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" action="Pixelizator">
                 <input name="submit" id="file" type="file" accept="image/*" onchange=updateSize()>
                 <br>
                 pixels:
-                <input type="range" name="pixels" min="0" max="100" step="1" value="50" onchange="updateTextInput(this.value);">
-                <input type="text" id="textInput" content="pixels:" value="50">
+                <input type="range" name="pixels" min="0" max="20" step="1" value="2" onchange="updateTextInput(this.value);">
+                <input type="text" id="textInput" content="pixels:" value="2">
                 <br>
                 <button type="submit"onclick="jQuery('#newImg').load(' #newImg');">send</button>
             </form>
@@ -52,39 +53,44 @@
                 </p>
             <div class="row"><img id="output"></div>
             <br><br>
-            <script>
-                function updateTextInput(val) {
-                    document.getElementById('textInput').value=val;
-                }
-                document.getElementById("file").addEventListener('change', function() {
-                    if (this.files && this.files[0]) {
-                        var image = document.getElementById("output");  // $('img')[0]
-                        image.src = URL.createObjectURL(this.files[0]); // set src to blob url
+            <div>
+                <img id="newImg" src="${pageContext.request.contextPath}//uploadFiles/<%=request.getAttribute("imgName")%>">
+            </div>
+            <div>
+                <button id="downloadButton">
+                    <a href="${pageContext.request.contextPath}//uploadFiles/<%=request.getAttribute("imgName")%>" download>
+                        Download
+                    </a>
+                </button>
+                "${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>"
+            </div>
 
-                        var img= this.files[0].size;
-                        var imgsize=img/1024;
-                        document.getElementById("fileSize").innerHTML = imgsize.toFixed(3) + " MiB";
-                        image.onload = imageIsLoaded;
-                    }
-                });
-                function reset(evt) {
-                    var file = evt.target.files; // FileList object
-                    var f = file[0];
-                    f = "";
-                }
-                var button = document.getElementById('btn-download');
-                button.addEventListener('click', function (e) {
-                    var dataURL = canvas.toDataURL('image/png');
-                    button.href = dataURL;
-                });
 
-                // document.getElementById('file').addEventListener('change', showImage, false);
-                // document.getElementById('file').addEventListener('load', reset, false);
-
-            </script>
-            <p>
-                <img id="newImg" src="${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>">
-            </p>
         </div>
     </body>
+    <script>
+        function updateTextInput(val) {
+            document.getElementById('textInput').value=val;
+        }
+        document.getElementById("file").addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                var image = document.getElementById("output");  // $('img')[0]
+                image.src = URL.createObjectURL(this.files[0]); // set src to blob url
+
+                var img= this.files[0].size;
+                var imgsize=img/1024;
+                document.getElementById("fileSize").innerHTML = imgsize.toFixed(3) + " MiB";
+                image.onload = imageIsLoaded;
+            }
+        });
+        function reset(evt) {
+            var file = evt.target.files; // FileList object
+            var f = file[0];
+            f = "";
+        }
+
+        // document.getElementById('file').addEventListener('change', showImage, false);
+        // document.getElementById('file').addEventListener('load', reset, false);
+
+    </script>
 </html>
