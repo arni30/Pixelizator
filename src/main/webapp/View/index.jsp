@@ -32,7 +32,7 @@
                 document.getElementById("fileSize").innerHTML = sOutput;
             }
         </script>
-        <link rel="stylesheet" href="../style.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/View/style.css"/>
     </head>
 
     <body bgcolor="#7fffd4">
@@ -40,11 +40,16 @@
         <div class="row">
             <!-- with input that accepts one file -->
             <form method="post" enctype="multipart/form-data" action="Pixelizator">
-                <input name="submit" id="file" type="file" accept="image/*" onchange=updateSize()>
+                <label for="file" class="custom-file-upload">
+                    <input name="submit" id="file" type="file" class="inputfile" accept="image/*" onchange=updateSize()>
+                    Choose a file
+                </label>
                 <br>
                 pixels:
-                <input type="range" name="pixels" min="0" max="20" step="1" value="2" onchange="updateTextInput(this.value);">
-                <input type="text" id="textInput" content="pixels:" value="2">
+                <input type="range" name="pixels" min="0" max="20" step="1" value="2" onclick="updateTextInput(this.value);">
+                <label id="textInput" content="pixels:">
+                    2
+                </label>
                 <br>
                 <button type="submit"onclick="jQuery('#newImg').load(' #newImg');">send</button>
             </form>
@@ -54,15 +59,15 @@
             <div class="row"><img id="output"></div>
             <br><br>
             <div>
-                <img id="newImg" src="${pageContext.request.contextPath}//uploadFiles/<%=request.getAttribute("imgName")%>">
+                <img id="newImg" src="${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>">
             </div>
             <div>
                 <button id="downloadButton">
-                    <a href="${pageContext.request.contextPath}//uploadFiles/<%=request.getAttribute("imgName")%>" download>
+                    <a href="${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>" download>
                         Download
                     </a>
+
                 </button>
-                "${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>"
             </div>
 
 
@@ -70,7 +75,7 @@
     </body>
     <script>
         function updateTextInput(val) {
-            document.getElementById('textInput').value=val;
+            document.getElementById('textInput').textContent=val
         }
         document.getElementById("file").addEventListener('change', function() {
             if (this.files && this.files[0]) {

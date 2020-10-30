@@ -1,7 +1,7 @@
 body {
     background-color: cornflowerblue;
 }
-button {
+button, .custom-file-upload {
     text-decoration: none;
     outline: none;
     display: inline-block;
@@ -9,6 +9,7 @@ button {
     padding: 20px 30px;
     margin: 10px 20px;
     border-radius: 10px;
+    border: none;
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -17,6 +18,13 @@ button {
     box-shadow: 0 0 20px rgba(0,0,0,.1);
     transition: .5s;
 }
-button:hover {
+button:hover, .custom-file-upload:hover {
     background-position: right center;
+}
+/* Скрываем элемент <input type="file" /> */
+input[type="file"] {
+    display: none;
+}
+#textInput {
+    background-color: transparent;
 }

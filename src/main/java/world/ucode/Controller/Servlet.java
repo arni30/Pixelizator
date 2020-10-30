@@ -28,6 +28,6 @@ public class Servlet extends HttpServlet {
         System.out.println(request.getParameter("pixels"));
         response.setContentType("image/*");
         request.setAttribute("imgName", changingImage.getNewFileName());
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/View/index.jsp").forward(request, response);
     }
 }
