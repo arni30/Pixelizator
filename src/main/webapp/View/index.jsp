@@ -15,77 +15,104 @@
         <%--    через 5 секунд переходит на страницу    --%>
 <%--        <meta http-equiv="refresh" content="5; URL=http://www.google.com">--%>
         <title>Pizelizator</title>
-        <script>
-            function updateSize() {
-                var nBytes = 0,
-                    oFiles = document.getElementById("file").files,
-                    nFiles = oFiles.length;
-                for (var nFileId = 0; nFileId < nFiles; nFileId++) {
-                    nBytes += oFiles[nFileId].size;
-                }
-                var sOutput = nBytes + " bytes";
-                // optional code for multiples approximation
-                for (var aMultiples = ["KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"], nMultiple = 0, nApprox = nBytes / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
-                    sOutput = nApprox.toFixed(3) + " " + aMultiples[nMultiple] + " (" + nBytes + " bytes)";
-                }
-                // end of optional code
-                document.getElementById("fileSize").innerHTML = sOutput;
-            }
-        </script>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/View/style.css"/>
+        <script src="http://code.jquery.com/jquery-2.2.4.js"
+                type="text/javascript">
+            // вызов функции по завершению загрузки страницы
+            $(document).ready(function() {
+                // вызов функции после потери полем 'userName' фокуса
+                $('#submit').click(function() {
+                    $.ajax({
+                        url : 'Pixelizator',     // URL - сервлет
+                        method: 'get',
+                        data : {                 // передаваемые сервлету данные
+                            userName : $('#pixels').val()
+                        },
+                        success : function(response) {
+                            // обработка ответа от сервера
+                            $('#ajaxUserServletResponse').text(response);
+                        },
+                        error:
+                            console.log("pizda");
+                    });
+                });
+            });
+        </script>
+
     </head>
 
-    <body bgcolor="#7fffd4">
+    <body>
         <h1>Pixelizator</h1>
         <div class="row">
             <!-- with input that accepts one file -->
-            <form method="post" enctype="multipart/form-data" action="Pixelizator">
+<%--            <form method="post" enctype="multipart/form-data">--%>
                 <label for="file" class="custom-file-upload">
-                    <input name="submit" id="file" type="file" class="inputfile" accept="image/*" onchange=updateSize()>
+                    <input name="submit" id="file" type="file" class="inputfile" accept="image/*">
                     Choose a file
                 </label>
                 <br>
                 pixels:
-                <input type="range" name="pixels" min="0" max="20" step="1" value="2" onclick="updateTextInput(this.value);">
+                <input type="range" id="pixels" name="pixels" min="0" max="20" step="1" value="2" onclick="updateTextInput(this.value);">
                 <label id="textInput" content="pixels:">
                     2
                 </label>
                 <br>
-                <button type="submit"onclick="jQuery('#newImg').load(' #newImg');">send</button>
-            </form>
+                <button id="submit">Pixelate</button>
+<%--            </form>--%>
+            <div>
                 <p>
-                total size: <span id="fileSize">0</span>
+                    total size: <span id="fileSize">0</span>
                 </p>
-            <div class="row"><img id="output"></div>
+<%--                <%String imgPath;--%>
+<%--                    if (request.getAttribute("imgName") != null)--%>
+<%--                        imgPath = ".." + request.getContextPath() + "/uploadFiles/" + request.getAttribute("imgName");--%>
+<%--                    else--%>
+<%--                        imgPath = "";--%>
+<%--                %>--%>
+                <%String newImgPath;
+                    if (session.getAttribute("newImgName") != null)
+                        newImgPath = request.getContextPath() + "/uploadFiles/" + session.getAttribute("newImgName");
+                    else
+                        newImgPath = "";
+                %>
+                <img id="clientImage" src="">
+            </div>
+            <span id="ajaxUserServletResponse"></span>
             <br><br>
             <div>
-                <img id="newImg" src="${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>">
+                <img id="newImg" src="<%= newImgPath%>">
             </div>
             <div>
-                <button id="downloadButton">
-                    <a href="${pageContext.request.contextPath}/uploadFiles/<%=request.getAttribute("imgName")%>" download>
+                <a href="<%=newImgPath%>" download>
+                    <button id="downloadButton">
                         Download
-                    </a>
-
-                </button>
+                    </button>
+                </a>
             </div>
 
 
         </div>
     </body>
     <script>
+        // function update_size(){
+        //     $(document).on("click", "#submit", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+        //         $.get("Servlet", function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+        //             $("#row").text(responseText);           // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+        //         });
+        //     });
+        //     document.getElementById('fileSize').innerHTML = document.getElementById('clientImage').size;
+        // }
         function updateTextInput(val) {
             document.getElementById('textInput').textContent=val
         }
         document.getElementById("file").addEventListener('change', function() {
             if (this.files && this.files[0]) {
-                var image = document.getElementById("output");  // $('img')[0]
+                var image = document.getElementById("clientImage");  // $('img')[0]
                 image.src = URL.createObjectURL(this.files[0]); // set src to blob url
 
                 var img= this.files[0].size;
                 var imgsize=img/1024;
                 document.getElementById("fileSize").innerHTML = imgsize.toFixed(3) + " MiB";
-                image.onload = imageIsLoaded;
             }
         });
         function reset(evt) {
@@ -93,9 +120,5 @@
             var f = file[0];
             f = "";
         }
-
-        // document.getElementById('file').addEventListener('change', showImage, false);
-        // document.getElementById('file').addEventListener('load', reset, false);
-
     </script>
 </html>
