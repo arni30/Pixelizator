@@ -25,7 +25,12 @@ public abstract class ChangingImageAbstract {
         String appPath = request.getServletContext().getRealPath("");
         imageSavePath = appPath + File.separator + SAVE_DIR;
         fileName = makeFileName(request);
+        try{
         originalImage = ImageIO.read(new File(imageSavePath + File.separator + fileName));
+        }
+        catch (Exception c){
+            System.out.println("error");
+        }
     }
     public String getImageSavePath() {
         return imageSavePath;

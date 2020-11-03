@@ -10,7 +10,7 @@ public class Router {
         switch (action) {
             case "pixelate":
                 return new Pixelization(request, response);
-            case "blacAndWhite":
+            case "blackAndWhite":
                 return new BlackAndWhite(request, response);
             default:
                 return null;

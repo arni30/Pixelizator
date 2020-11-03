@@ -1,13 +1,10 @@
 package world.ucode.Controller;
-
+import org.json.simple.JSONObject;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import java.io.IOException;
+import java.io.*;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.*;
 import world.ucode.Model.ChangingImageAbstract;
 import world.ucode.Model.Router;
 
@@ -18,16 +15,14 @@ import world.ucode.Model.Router;
 public class Servlet extends HttpServlet {
     private final Router router = new Router();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    }
-
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        ChangingImageAbstract changingImage = (ChangingImageAbstract) router.makeActionObject("pixelate", request, response);
+        ChangingImageAbstract changingImage = (ChangingImageAbstract) router.makeActionObject(request.getParameter("type"), request, response);
         changingImage.makeAction();
-        System.out.println(request.getParameter("pixels"));
-        response.setContentType("image/*");
-        request.setAttribute("imgName", changingImage.getNewFileName());
-        request.getRequestDispatcher("/View/index.jsp").forward(request, response);
+        JSONObject jsonArray = new JSONObject();
+        jsonArray.put("newFile", changingImage.getNewFileName());
+        StringWriter out = new StringWriter();
+        jsonArray.writeJSONString(out);
+        response.getWriter().write(String.valueOf(out));
     }
 }
