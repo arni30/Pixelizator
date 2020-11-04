@@ -45,6 +45,7 @@
                                 $('#newImg').attr("src", newImgPath);
                                 $('#download').attr("href", newImgPath);
                                 $('#load').attr("style", "visibility: visible");
+                                $('#newImgDiv').attr("style", "display: initial");
 
                             },
                         });
@@ -75,12 +76,11 @@
                                 $('#newImg').attr("src", newImgPath);
                                 $('#download').attr("href", newImgPath);
                                 $('#load').attr("style", "visibility: visible");
-
+                                $('#newImgDiv').attr("style", "display: initial");
                             },
                         });
                     }
                 });
-
             });
         </script>
 
@@ -109,10 +109,10 @@
                     total size: <span id="fileSize">0</span>
                 </p>
             </div>
-            <div style="float: left; margin-right: 30px; margin-left: 75px">
+            <div id="clientImgDiv" style="display: none; float: left; margin-right: 30px; margin-left: 75px" >
                 <img id="clientImage" src="">
             </div>
-            <div style="margin-left: 10px">
+            <div style="display: none;" id="newImgDiv">
                 <img id="newImg" src="">
             </div>
             <div id="load" style="visibility: hidden">
@@ -132,10 +132,11 @@
         }
         document.getElementById("file").addEventListener('change', function() {
             if (this.files && this.files[0]) {
-                document.getElementById("newImg").src = "";
+                document.getElementById("newImg").src = null;
                 document.getElementById("download").href = "";
+                $('#newImgDiv').attr("style", "display: none");
+                $('#clientImgDiv').attr("style", "display: initial");
                 $('#load').attr("style", "visibility: hidden");
-                // document.getElementById("download").disabled = true;
                 var image = document.getElementById("clientImage");  // $('img')[0]
                 image.src = URL.createObjectURL(this.files[0]); // set src to blob url
 
