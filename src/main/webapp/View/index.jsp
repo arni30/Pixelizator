@@ -12,78 +12,13 @@
     <head>
         <meta name="description" content="Pixelizator">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Pizelizator</title>
+        <title>Pixelizator</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/View/style.css"/>
         <script src="http://code.jquery.com/jquery-2.2.4.js"
                 type="text/javascript">
         </script>
-        <script>
-
-            $(document).ready(function() {
-                $('#submit').click(function() {
-                    var form = $('#form')[0];
-                    var data = new FormData(form);
-                    data.append('type', 'pixelate');
-                    console.log(data);
-                    if (document.getElementById("file").files.length === 0)
-                    {
-                        alert ("Сhoose your image");
-                    }
-                    else {
-                        $.ajax({
-                            url: 'Pixelizator',     // URL - сервлет
-                            method: 'POST',
-                            cache: false,
-                            processData: false,
-                            contentType: false,
-                            data: data,
-                            success: function (response) {
-                                console.log("SUCCESS : ", data);
-                                var json = JSON.parse(response);
-                                console.log(json);
-                                var newImgPath = "<%=request.getContextPath()%>/uploadFiles/" + json.newFile;
-                                $('#newImg').attr("src", newImgPath);
-                                $('#download').attr("href", newImgPath);
-                                $('#load').attr("style", "visibility: visible");
-                                $('#newImgDiv').attr("style", "display: initial");
-
-                            },
-                        });
-                    }
-                });
-                $('#black').click(function() {
-                    var form = $('#form')[0];
-                    var data = new FormData(form);
-                    data.append('type', 'blackAndWhite');
-                    console.log(data);
-                    if (document.getElementById("file").files.length === 0)
-                    {
-                        alert ("Сhoose your image");
-                    }
-                    else {
-                        $.ajax({
-                            url: 'Pixelizator',     // URL - сервлет
-                            method: 'POST',
-                            cache: false,
-                            processData: false,
-                            contentType: false,
-                            data: data,
-                            success: function (response) {
-                                console.log("SUCCESS : ", data);
-                                var json = JSON.parse(response);
-                                console.log(json);
-                                var newImgPath = "<%=request.getContextPath()%>/uploadFiles/" + json.newFile;
-                                $('#newImg').attr("src", newImgPath);
-                                $('#download').attr("href", newImgPath);
-                                $('#load').attr("style", "visibility: visible");
-                                $('#newImgDiv').attr("style", "display: initial");
-                            },
-                        });
-                    }
-                });
-            });
-        </script>
-
+        <script> var path = "${pageContext.request.contextPath}"</script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/View/script.js"></script>
     </head>
 
     <body>
@@ -116,34 +51,35 @@
                 <img id="newImg" src="">
             </div>
             <div id="load" style="visibility: hidden">
-                <a id="download" href="" download>
+                <span>
+                <a id="download" href="" download="image.png">
                     <button id="downloadButton">
-                        Download
+                        png
                     </button>
                 </a>
+                </span>
+                <span>
+                    <a id="jpg" href="" download="image.jpg">
+                        <button id="jpgButton">
+                            jpg
+                        </button>
+                    </a>
+                </span>
+                <span>
+                    <a id="webp" href="" download="image.webp">
+                        <button id="webpButton">
+                            webp
+                        </button>
+                    </a>
+                </span>
+                <span>
+                    <a id="bmp" href="" download="image.bmp">
+                        <button id="bmpButton">
+                            bmp
+                        </button>
+                    </a>
+                </span>
             </div>
-
-
         </div>
     </body>
-    <script>
-        function updateTextInput(val) {
-            document.getElementById('textInput').textContent=val
-        }
-        document.getElementById("file").addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                document.getElementById("newImg").src = null;
-                document.getElementById("download").href = "";
-                $('#newImgDiv').attr("style", "display: none");
-                $('#clientImgDiv').attr("style", "display: initial");
-                $('#load').attr("style", "visibility: hidden");
-                var image = document.getElementById("clientImage");  // $('img')[0]
-                image.src = URL.createObjectURL(this.files[0]); // set src to blob url
-
-                var img= this.files[0].size;
-                var imgsize=img/1024;
-                document.getElementById("fileSize").innerHTML = imgsize.toFixed(3) + " MiB";
-            }
-        });
-    </script>
 </html>
